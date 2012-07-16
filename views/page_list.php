@@ -14,10 +14,15 @@
  */
 
 
+
+
 //Start the menu
 echo '<div id="'.$args['widget_id'].'" class="advanced-sidebar-menu widget advanced-sidebar-page">
 			<div class="widget-wrap">';
-
+     
+     if( $instance['title'] != '' ){
+	     echo '<h4 class="widgettitle">' . $instance['title'] . '</h4>';
+     }
 
 	#-- if the checkbox to include parent is checked
 	if( $instance['include_parent'] == 'checked' ){

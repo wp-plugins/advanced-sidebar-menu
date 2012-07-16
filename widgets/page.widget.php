@@ -18,24 +18,28 @@ class advanced_sidebar_menu_page extends WP_Widget {
 	function form( $instance ) {
 			//	  		require( ADVANCED_SIDEBAR_DIR . 'advanced-sidebar-menu.js' );
 			?>
+            
+            <p> Title <br>
+             <input id="<?php echo $this->get_field_name('title'); ?>" 
+            	name="<?php echo $this->get_field_name('title'); ?>" size="50" type="text" value="<?php echo $instance['title']; ?>"/></p>
 
-            <p> Include Parent Page <input id="<?php echo $this->get_field_name('include_parent'); ?>" 
+            <p> Include Parent Page: <input id="<?php echo $this->get_field_name('include_parent'); ?>" 
             	name="<?php echo $this->get_field_name('include_parent'); ?>" type="checkbox" value="checked" 
             	<?php echo $instance['include_parent']; ?>/></p>
 			
             			
-			<p> Include Parent Even With No Children<input id="<?php echo $this->get_field_name('include_childless_parent'); ?>"
+			<p> Include Parent Even With No Children: <input id="<?php echo $this->get_field_name('include_childless_parent'); ?>"
 			name="<?php echo $this->get_field_name('include_childless_parent'); ?>" type="checkbox" value="checked" 
 					<?php echo $instance['include_childless_parent']; ?>/></p>
 					
-			<p> Use Built in Styling <input id="<?php echo $this->get_field_name('css'); ?>"
+			<p> Use Built in Styling: <input id="<?php echo $this->get_field_name('css'); ?>"
 			name="<?php echo $this->get_field_name('css'); ?>" type="checkbox" value="checked" 
 					<?php echo $instance['css']; ?>/></p>
 					
-			<p> Pages to Exclude, Comma Separated:<input id="<?php echo $this->get_field_name('exclude'); ?>" 
+			<p> Pages to Exclude, Comma Separated: <input id="<?php echo $this->get_field_name('exclude'); ?>" 
             	name="<?php echo $this->get_field_name('exclude'); ?>" type="text" value="<?php echo $instance['exclude']; ?>"/></p>
             	
-            <p> Always Display Child Pages <input id="<?php echo $this->get_field_name('display_all'); ?>" 
+            <p> Always Display Child Pages: <input id="<?php echo $this->get_field_name('display_all'); ?>" 
             	name="<?php echo $this->get_field_name('display_all'); ?>" type="checkbox" value="checked" 
             	onclick="javascript:asm_reveal_element( 'levels-<?php echo $this->get_field_name('levels'); ?>' )"
             	<?php echo $instance['display_all']; ?>/></p>
@@ -46,7 +50,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
                   } else {
                   	echo 'display:none';
                   } ?>"> 
-            <p> Levels to Display <select id="<?php echo $this->get_field_name('levels'); ?>" 
+            <p> Levels to Display: <select id="<?php echo $this->get_field_name('levels'); ?>" 
             name="<?php echo $this->get_field_name('levels'); ?>">
             <?php 
             	for( $i= 1; $i<6; $i++ ){
@@ -70,6 +74,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
 			$instance['display_all'] = strip_tags($new_instance['display_all']);
 			$instance['levels'] = strip_tags($new_instance['levels']);
 			$instance['css'] = strip_tags($new_instance['css']);
+			$instance['title'] = strip_tags($new_instance['title']);
 			return $instance;
 		}
 
@@ -79,10 +84,10 @@ class advanced_sidebar_menu_page extends WP_Widget {
 	function advanced_sidebar_menu_page( ) {
 				/* Widget settings. */
 		$widget_ops = array( 'classname' => 'sidebar-menu', 'description' => 'Creates a menu of all the pages using the child/parent relationship' );
-
+        $control_ops = array( 'width' => 290 );
 
 		/* Create the widget. */
-		$this->WP_Widget( 'advanced_sidebar_menu', 'Advanced Sidebar Pages Menu', $widget_ops);
+		$this->WP_Widget( 'advanced_sidebar_menu', 'Advanced Sidebar Pages Menu', $widget_ops, $control_ops);
 		}
 
 

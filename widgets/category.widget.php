@@ -20,7 +20,9 @@ class advanced_sidebar_menu_category extends WP_Widget {
 	function form( $instance ) {
 				  	//	 require( ADVANCED_SIDEBAR_DIR . 'advanced-sidebar-menu.js' );
 			?>
-			
+			 <p> Title <br>
+             <input id="<?php echo $this->get_field_name('title'); ?>" 
+            	name="<?php echo $this->get_field_name('title'); ?>" size="50" type="text" value="<?php echo $instance['title']; ?>"/></p>
 			
 			
             <p> Include Parent Category <input id="<?php echo $this->get_field_name('include_parent'); ?>" 
@@ -105,6 +107,8 @@ class advanced_sidebar_menu_category extends WP_Widget {
 			$instance['css'] = strip_tags($new_instance['css']);
 			$instance['single'] = strip_tags($new_instance['single']);  //Display on single pages
 			$instance['new_widget'] = strip_tags($new_instance['new_widget']); //Create a new widget for each single category
+			$instance['title'] = strip_tags($new_instance['title']);
+			
 			return $instance;
 		}
 
