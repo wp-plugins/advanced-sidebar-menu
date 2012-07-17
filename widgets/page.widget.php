@@ -95,9 +95,10 @@ class advanced_sidebar_menu_page extends WP_Widget {
 
     // adds the output to the widget area on the page
 	function widget($args, $instance) {
+		
 		if( is_page() ){
 			
-	 		 global $wpdb, $post, $table_prefix;
+	 		 global $wpdb, $post, $table_prefix, $asm;
 	  		 
 	  		 #-- Create a usable array of the excluded pages
 	  		 $exclude = explode(',', $instance['exclude']);
@@ -128,10 +129,13 @@ class advanced_sidebar_menu_page extends WP_Widget {
 					echo '</style>';
 				}
 			
-			
-				#-- Bring in the output
-    			require( advanced_sidebar_menu_functions::file_hyercy( 'page_list.php' ) );
-				
+				//Start the menu
+				echo '<div id="'.$args['widget_id'].'" class="advanced-sidebar-menu widget advanced-sidebar-page">
+							<div class="widget-wrap">';
+			   					 $asm->set_widget_vars( $instance, $top_parent, $exclude );
+								#-- Bring in the view
+    							require( $asm->file_hyercy( 'page_list.php' ) );
+				echo '</div></div><!-- end #'.$args['widget_id'].' -->';
 			}
 		}
 	} #== /widget()
