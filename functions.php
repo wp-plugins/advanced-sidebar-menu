@@ -20,8 +20,6 @@ class advanced_sidebar_menu_functions{
  */
 function validate_3_3(){
 /** Note to self -- Remove this at the new version **/
-		
-
 	if ( $page_file = locate_template(array('advanced-sidebar-menu/page_list.php')) ) {
 	$data = explode("\n", file_get_contents( $page_file )); //create array separate by new line
 	foreach( $data as $line => $content ){

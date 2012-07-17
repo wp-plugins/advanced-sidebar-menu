@@ -10,7 +10,6 @@ Since: 7/16/12
 Email: mat@lipeimagination.info
 */
 
-
 #-- Bring in the functions
 require( 'functions.php' );
 $asm = new advanced_sidebar_menu_functions();
