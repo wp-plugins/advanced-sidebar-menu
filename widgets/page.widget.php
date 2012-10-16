@@ -134,7 +134,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
 		/**
 	     * Must be done this way to prevent doubling up of pages
 		 */
-		 $child_pages = $wpdb->get_results( "SELECT ID FROM ".$table_prefix."posts WHERE post_parent = $top_parent AND post_status='publish' Order by menu_order" );
+		 $child_pages = $wpdb->get_results( "SELECT ID FROM ".$table_prefix."posts WHERE post_parent = $top_parent AND post_status='publish' AND post_type='".$post_type."' Order by menu_order" );
 			
 		//for depreciation
 		$p = $top_parent;
