@@ -4,13 +4,62 @@
          /**
           * These Functions are Specific to the Advanced Sidebar Menu
           * @author Mat Lipe
-          * @since 10.12.12
+          * @since 4.5.13
           */
 class advancedSidebarMenu{
-	     private $instance; //The widget instance 
-         private $top_id; //Either the top cat or page
-         private $exclude;
-         private $ancestors; //For the category ancestors
+	  var $instance; //The widget instance 
+      var $top_id; //Either the top cat or page
+      var $exclude;
+      var $ancestors; //For the category ancestors
+      var $count = 1; //Count for grandchild levels
+      var $order_by;
+	     
+	 /**   
+      * Displays all the levels of the Grandchild Menus
+      * 
+      * Will run until there are no children left for the current page's hyercy
+      * Only displays the pages if we are on a child or grandchild page of the Id sent 
+      * which at the time of creation comes from the child level pages
+      * 
+      * 
+      * @uses called by the widget view page_list.php
+      * @since 4.0
+      */
+	 function displayGrandChildMenu($page){
+        $this->count++;
+
+        //If the page sent is not a child of the current page
+        if( !$this->page_ancestor($page) ) return;
+        
+        //if there are no children of the current page bail
+        if( !$children = $this->page_children($page->ID) ) return;
+
+        foreach( $children as $child ){
+            printf('<ul class="grandchild-sidebar-menu level-%s">',$count );
+
+            $args = array(
+                  'post_type' => $this->post_type,
+                  'sort_column' => $this->order_by,
+                  'title_li'    => '',
+                  'echo'        => 1,
+                  'depth'       => 1,
+                  'exclude'     => join(',',$this->exclude),
+                  'include'     => $child->ID
+                  );
+                  
+            wp_list_pages($args);
+
+            //If this newly outputed child is a direct parent of the current page
+            if( $this->page_ancestor($child) ){
+               $this->displayGrandChildMenu($child);
+            }
+        echo '</ul>';
+       }
+        
+    }
+	     
+	     
+	     
 	     
 	     
 	     /**
@@ -20,7 +69,7 @@ class advancedSidebarMenu{
 	      * @return array
 	      * @since 10.10.12
 	      */
-	     function custom_post_type_css($css, $this_menu_item){
+	function custom_post_type_css($css, $this_menu_item){
 	         global $post;
 	         if ( isset($post->ancestors) && in_array($this_menu_item->ID, (array)$post->ancestors) ){
 	             $css[] = 'current_page_ancestor';
@@ -32,7 +81,7 @@ class advancedSidebarMenu{
 	             $css[] = 'current_page_parent';
 	         }
 	         return $css;
-	     }
+	 }
 	     
 
 	

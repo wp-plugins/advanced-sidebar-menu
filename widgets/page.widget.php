@@ -102,26 +102,30 @@ class advanced_sidebar_menu_page extends WP_Widget {
      * @uses change the top parent manually with the filter 'advanced_sidebar_menu_top_parent'
      * @uses change the order of the 2nd level pages with 'advanced_sidebar_menu_order_by' filter
      * 
-     * @since 3.6.13
+     * @since 4.5.13
      */
 	function widget($args, $instance) {
 	    global $wpdb, $post, $table_prefix;
         $asm = new advancedSidebarMenu;
 
+        $asm->instance = $instance;
 	    extract($args);
 	    
 	    //Filter this one with a 'single' for a custom post type will default to working for pages only
 	    $post_type = apply_filters('advanced_sidebar_menu_post_type', 'page' );
-	    
+	    $asm->post_type = $post_type;
 	    
 	    if( $post_type != 'page' ){
              add_filter('page_css_class', array( $asm, 'custom_post_type_css'), 2, 4 );
              
         }
-
+        
+        
 			
 	    #-- Create a usable array of the excluded pages
 	    $exclude = explode(',', $instance['exclude']);
+        $asm->exclude = $exclude;
+
 		 
 	    #-- if the post has parents
 		if($post->ancestors){
@@ -134,10 +138,14 @@ class advanced_sidebar_menu_page extends WP_Widget {
 			
 		//Filter for specifying the top parent
 		$top_parent = apply_filters('advanced_sidebar_menu_top_parent', $top_parent, $post );
+        $asm->top_id = $top_parent;
+        
         
         //Filter for specifiying the order by
         $order_by = apply_filters('advanced_sidebar_menu_order_by', 'menu_order', $post );
-			
+		$asm->order_by = $order_by;	
+            
+            
 		/**
 	     * Must be done this way to prevent doubling up of pages
 		 */
@@ -146,7 +154,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
 		//for depreciation
 		$p = $top_parent;
 		$result = $child_pages;
-	
+
 		#---- if there are no children do not display the parent unless it is check to do so
 		if( ($child_pages) || (($instance['include_childless_parent'] == 'checked') && (!in_array($top_parent, $exclude)) )  ){
 			
@@ -159,7 +167,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
 				
 				//Start the menu
 				echo $before_widget;
-			   					 $asm->set_widget_vars( $instance, $top_parent, $exclude );
+			   					 
 								#-- Bring in the view
     							require( $asm->file_hyercy( 'page_list.php' ) );
 				echo $after_widget;

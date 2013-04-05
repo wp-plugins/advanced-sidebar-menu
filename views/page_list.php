@@ -38,19 +38,7 @@ if( $child_pages ){
 				wp_list_pages("post_type=".$post_type."&sort_column=$order_by&title_li=&echo=1&depth=1&include=".$pID->ID);
 			}
 
-			#-- if the link that was just listed is the current page we are on
-			if( $asm->page_ancestor( $pID ) ){
-
-				//Get the children of this page
-				$grandkids = $asm->page_children($pID->ID );				
-				if( $grandkids ){
-					#-- Create a new menu with all the children under it
-					echo '<ul class="grandchild-sidebar-menu">';
-							wp_list_pages("post_type=".$post_type."&sort_column=$order_by&title_li=&echo=1&exclude=".$instance['exclude']."&child_of=".$pID->ID);
-
-					echo '</ul>';
-				}
-			}
+			$asm->displayGrandChildMenu($pID);
 		}
 	}
 
