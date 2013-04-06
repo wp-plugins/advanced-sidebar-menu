@@ -5,21 +5,37 @@
            * Creates a Widget of parent Child Pages
            * 
            * @author mat lipe
-           * @since 3.6.13
+           * @since 4.5.13
            * @package Advanced Sidebar Menu
            *
            */
-
-
-
 class advanced_sidebar_menu_page extends WP_Widget {
 
-#-----------------------------------------------------------------------------------------------------------------------------------
-	  // this creates the widget form for the dashboard
+    /**
+     * Build the widget like a Mo Fo
+     * 
+     * @since 4.5.13
+     * 
+     */
+    function __construct() {
+                /* Widget settings. */
+        $widget_ops = array( 'classname' => 'advanced-sidebar-menu', 'description' => 'Creates a menu of all the pages using the child/parent relationship' );
+        $control_ops = array( 'width' => 290 );
+
+        /* Create the widget. */
+        $this->WP_Widget( 'advanced_sidebar_menu', 'Advanced Sidebar Pages Menu', $widget_ops, $control_ops);
+    }
+    
+    
+    /**
+     * Output a simple widget Form
+     * Not of ton of options here but who need them
+     * Most of the magic happens automatically
+     * 
+     * @since 4.5.13
+     */
 	function form( $instance ) {
-			//	  		require( ADVANCED_SIDEBAR_DIR . 'advanced-sidebar-menu.js' );
-			?>
-            
+         ?>
             <p> Title <br>
              <input id="<?php echo $this->get_field_name('title'); ?>" 
             	name="<?php echo $this->get_field_name('title'); ?>" size="50" type="text" value="<?php echo $instance['title']; ?>"/></p>
@@ -32,13 +48,17 @@ class advanced_sidebar_menu_page extends WP_Widget {
 			<p> Include Parent Even With No Children: <input id="<?php echo $this->get_field_name('include_childless_parent'); ?>"
 			name="<?php echo $this->get_field_name('include_childless_parent'); ?>" type="checkbox" value="checked" 
 					<?php echo $instance['include_childless_parent']; ?>/></p>
-					
+						
 			<p> Use Built in Styling: <input id="<?php echo $this->get_field_name('css'); ?>"
 			name="<?php echo $this->get_field_name('css'); ?>" type="checkbox" value="checked" 
 					<?php echo $instance['css']; ?>/></p>
 					
 			<p> Pages to Exclude, Comma Separated: <input id="<?php echo $this->get_field_name('exclude'); ?>" 
             	name="<?php echo $this->get_field_name('exclude'); ?>" type="text" value="<?php echo $instance['exclude']; ?>"/></p>
+            <p> Legacy Mode: (displays all 3rd level and down pages when on a second level page) <input id="<?php echo $this->get_field_name('legacy_mode'); ?>"
+            name="<?php echo $this->get_field_name('legacy_mode'); ?>" type="checkbox" value="checked" 
+                    <?php echo $instance['legacy_mode']; ?>/>
+            </p>    
             	
             <p> Always Display Child Pages: <input id="<?php echo $this->get_field_name('display_all'); ?>" 
             	name="<?php echo $this->get_field_name('display_all'); ?>" type="checkbox" value="checked" 
@@ -62,34 +82,20 @@ class advanced_sidebar_menu_page extends WP_Widget {
             		}
             	} 
             	echo '</select></p></span>';
+                
+            
 		}
 
-#------------------------------------------------------------------------------------------------------------------------------
-	// this allows more than one instance
 
+    /**
+     * Handles the saving of the widget
+     * 
+     * @since 4.5.13
+     */
 	function update( $new_instance, $old_instance ) {
-			$instance = $old_instance;
-			$instance['include_childless_parent'] = strip_tags($new_instance['include_childless_parent']);
-			$instance['include_parent'] = strip_tags($new_instance['include_parent']);
-			$instance['exclude'] = strip_tags($new_instance['exclude']);
-			$instance['display_all'] = strip_tags($new_instance['display_all']);
-			$instance['levels'] = strip_tags($new_instance['levels']);
-			$instance['css'] = strip_tags($new_instance['css']);
-			$instance['title'] = strip_tags($new_instance['title']);
-			return $instance;
-		}
-
-#-------------------------------------------------------------------------------------------------------------------------
-
-  	// This decides the name of the widget
-	function advanced_sidebar_menu_page( ) {
-				/* Widget settings. */
-		$widget_ops = array( 'classname' => 'advanced-sidebar-menu', 'description' => 'Creates a menu of all the pages using the child/parent relationship' );
-        $control_ops = array( 'width' => 290 );
-
-		/* Create the widget. */
-		$this->WP_Widget( 'advanced_sidebar_menu', 'Advanced Sidebar Pages Menu', $widget_ops, $control_ops);
-		}
+			$new_instance['exclude'] = strip_tags($new_instance['exclude']);
+			return $new_instance;
+    }
 
 
 #---------------------------------------------------------------------------------------------------------------------------

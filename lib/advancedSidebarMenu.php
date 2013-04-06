@@ -14,6 +14,30 @@ class advancedSidebarMenu{
       var $count = 1; //Count for grandchild levels
       var $order_by;
 	     
+         
+      /**
+       * The Old way of doing thing which displayed all 3rd levels and below when on a second level page
+       * This is only here for people afraid of change who liked the old way of doing things
+       * 
+       * @uses used in views -> page_list.php when legacy mode is checked in widget
+       * @since 4.5.13
+       */   
+      function grandChildLegacyMode($pID ){
+          #-- if the link that was just listed is the current page we are on
+            if( !$this->page_ancestor( $pID ) ) return;
+
+                //Get the children of this page
+                $grandkids = $this->page_children($pID->ID );                
+                if( $grandkids ){
+                    #-- Create a new menu with all the children under it
+                    echo '<ul class="grandchild-sidebar-menu">';
+                            wp_list_pages("post_type=".$this->post_type."&sort_column=$order_by&title_li=&echo=1&exclude=".$this->instance['exclude']."&child_of=".$pID->ID);
+
+                    echo '</ul>';
+                }
+      }    
+                  
+         
 	 /**   
       * Displays all the levels of the Grandchild Menus
       * 
@@ -26,7 +50,8 @@ class advancedSidebarMenu{
       * @since 4.0
       */
 	 function displayGrandChildMenu($page){
-        $this->count++;
+        static $count = 1;
+        $count++;
 
         //If the page sent is not a child of the current page
         if( !$this->page_ancestor($page) ) return;
