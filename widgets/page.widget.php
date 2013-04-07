@@ -125,6 +125,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
         $asm = new advancedSidebarMenu;
 
         $asm->instance = $instance;
+        $asm->args = $args;
 	    extract($args);
 	    
 	    //Filter this one with a 'single' for a custom post type will default to working for pages only

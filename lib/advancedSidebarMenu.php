@@ -5,6 +5,8 @@
           * These Functions are Specific to the Advanced Sidebar Menu
           * @author Mat Lipe
           * @since 4.7.13
+          * 
+          * @package Advanced Sidebar Menu
           */
 class advancedSidebarMenu{
 	  var $instance; //The widget instance 
@@ -132,19 +134,6 @@ class advancedSidebarMenu{
 	 }
 	     
 
-	
-	/**
-	 * Sets the instance of this widget to this class
-	 * @param array $instance the widgets instance
-	 * @since 7/16/12
-	 */
-	function set_widget_vars( $instance, $top_id, $exclude, $ancestors = array() ){
-		$this->instance = $instance;
-		$this->top_id = $top_id;
-		$this->exclude = $exclude;
-		$this->ancestors = $ancestors;
-	}
-	
 	/**
 	 * 
 	 * IF this is a top level category
@@ -236,11 +225,14 @@ class advancedSidebarMenu{
    
 	/**
 	 * Echos the title of the widget to the page
-	 * @since 7/16/12
+	 * @since 4.7.13
 	 */
 	function title(){
 	    if( $this->instance['title'] != '' ){
-	     	echo '<h4 class="widgettitle">' . $this->instance['title'] . '</h4>';
+	        
+            $title = apply_filters('widget_title', $this->instance['title'], $this->args, $this->instance );
+            
+	     	echo '<h4 class="widgettitle">' . $title . '</h4>';
      	}
 		
 	}

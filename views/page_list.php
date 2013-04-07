@@ -2,7 +2,7 @@
 /**
  * The Ouput of the Advanced Sidebar Page Widget
  * @author Mat Lipe
- * @since 4.0.3
+ * @since 4.1.0
  *
  *
  * @uses to edit, create a file named page_list.php and put in a folder in the your theme called 'advanced-sidebar-menu
