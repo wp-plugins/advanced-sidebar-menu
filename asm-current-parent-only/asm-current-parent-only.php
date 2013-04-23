@@ -6,16 +6,15 @@ Description: Adds an option to only display the direct ancestors of the current 
 Author: Mat Lipe
 Version: 1.0
 Author URI: http://lipeimagination.info
-Since: 4.23.13
+Since: 4.24.13
 */
 
 add_filter('advanced_sidebar_menu_child_pages', 'asm_current_parent_only_child_pages', 1, 4);
 function asm_current_parent_only_child_pages( $child_pages, $post, $args, $instance ){
     
-    if( !isset( $instance['parent_only'] ) || ($instance['parent_only'] != 'checked') ) return $child_pages;
+    if( !isset( $instance['parent_only'] ) || ($instance['parent_only'] != 'checked') || ($post->post_parent == 0) ) return $child_pages;
     
     $asm = new advancedSidebarMenu();
-    
     foreach( $child_pages as $key => $id ){
         if( !$asm->page_ancestor($id) ){
             unset( $child_pages[$key] );
