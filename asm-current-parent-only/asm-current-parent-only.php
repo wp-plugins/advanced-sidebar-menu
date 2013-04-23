@@ -1,0 +1,42 @@
+<?php
+/*
+Plugin Name: Advanced Sidebar Menu Current Parent Only Addon
+Plugin URI: http://lipeimagination.info/wordpress/advanced-sidebar-menu/
+Description: Adds an option to only display the direct ancestors of the current Page
+Author: Mat Lipe
+Version: 1.0
+Author URI: http://lipeimagination.info
+Since: 4.23.13
+*/
+
+add_filter('advanced_sidebar_menu_child_pages', 'asm_current_parent_only_child_pages', 1, 4);
+function asm_current_parent_only_child_pages( $child_pages, $post, $args, $instance ){
+    
+    if( !isset( $instance['parent_only'] ) || ($instance['parent_only'] != 'checked') ) return $child_pages;
+    
+    $asm = new advancedSidebarMenu();
+    
+    foreach( $child_pages as $key => $id ){
+        if( !$asm->page_ancestor($id) ){
+            unset( $child_pages[$key] );
+        }
+    }
+    return $child_pages;
+}
+
+add_action('advanced_sidebar_menu_page_widget_form', 'asm_current_parent_only_widget_form', 1, 3 );
+function asm_current_parent_only_widget_form($instance, $name, $id){
+    ?>
+        <p class="update-nag"> Display Current Pages Parent Only: 
+        
+            <input id="<?php echo $id; ?>" 
+                name="<?php echo $name; ?>" 
+                type="checkbox" 
+                value="checked" 
+                <?php echo $instance['parent_only']; ?>
+            />
+         </p>
+    <?php
+        
+}
+    
