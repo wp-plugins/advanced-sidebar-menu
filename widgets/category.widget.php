@@ -175,8 +175,7 @@ class advanced_sidebar_menu_category extends WP_Widget {
            
             //Sort by term_order to work with some plugins
             $asm->order_by = apply_filters('advanced_sidebar_menu_category_orderby', 'name', $args, $instance );
-            
-            $asm->order_by = 'term_order';
+
             uasort( $category_array, array( $asm, 'sortTerms'));
 
             foreach( $category_array as $id => $cat ){
