@@ -206,7 +206,11 @@ class advanced_sidebar_menu_category extends WP_Widget {
              $already_top[] = $asm->top_id;
        
             //Check for children
-            $all_categories = $all = array_filter(get_categories( array( 'child_of' => $asm->top_id )) );
+            $all_categories = $all = array_filter( get_terms( $asm->taxonomy, array( 
+                                                                                        'child_of' => $child_cat->cat_ID, 
+                                                                                        'orderby' => $asm->order_by )
+                                                             ) 
+                                                 );
 
             
             //If there are no children and not displaying childless parent - bail
