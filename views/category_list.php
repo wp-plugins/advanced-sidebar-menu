@@ -1,7 +1,7 @@
 <?php 
 
             /**
-             * The Ouput of tad Advanced Sidebar Categories Widget
+             * The Ouput of the Advanced Sidebar Categories Widget
              * @author Mat Lipe
              * @since 4.3.0
              * 
