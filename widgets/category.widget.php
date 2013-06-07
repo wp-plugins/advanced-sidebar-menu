@@ -211,6 +211,11 @@ class advanced_sidebar_menu_category extends WP_Widget {
                                                                                         'orderby' => $asm->order_by )
                                                              ) 
                                                  );
+            //For Backwards Compatibility
+            foreach( $all_categories as $tc ){
+               $tc->cat_ID = $tc->term_id;   
+            }    
+            
 
             
             //If there are no children and not displaying childless parent - bail
