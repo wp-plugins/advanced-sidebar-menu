@@ -3,7 +3,7 @@
             /**
              * The Ouput of the Advanced Sidebar Categories Widget
              * @author Mat Lipe
-             * @since 4.3.0
+             * @since 4.3.1
              * 
              * 
              * @uses to edit create a file named category_list.php and put in a folder in the your child theme called 'advanced-sidebar-menu
