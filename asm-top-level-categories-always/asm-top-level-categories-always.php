@@ -8,7 +8,7 @@
  */ 
  
 add_filter( 'advanced_sidebar_menu_category_ids', array( $this, 'allTopCategories' ) );
-function allTopCategories($term_ids){
+     function allTopCategories($term_ids){
          //Once inside the function it grabs all the product_category ids             
          $terms =  get_terms(
                         'product_category',
@@ -16,9 +16,15 @@ function allTopCategories($term_ids){
                                   'order_by' => 'term_order',
                                    )
                           );
-
+       
+         //Create a keyed array to avoid additional database calls
          foreach( $terms as $k => $t ){
-            
+            if( in_array( $t->term_id, $term_ids ) ){
+                $keyed_terms[$t->term_id] = $t;   
+            }
+         }
+
+         foreach( $terms as $k => $t ){    
             //If this is a sub category we don't care about it
             if( $t->parent != 0 ) {
                 continue;
@@ -28,14 +34,20 @@ function allTopCategories($term_ids){
             if( in_array( $t->term_id, $term_ids ) ){
                  unset( $term_ids[array_search($t->term_id, $term_ids)] );
             }
-            $top_levels[] =  $t->term_id; 
-         }
-          
-          //Put the top level categories first which are now in proper order      
-          $term_ids = array_merge($top_levels, $term_ids);
+            
+            //Put the child term first if it exists which will make this work later
+            foreach( $term_ids as $id ){
+                if( $keyed_terms[$id]->parent == $t->term_id ){
+                    $sorted_terms[] = $keyed_terms[$id]->term_id;
+                    break;
+                } 
+            }
+            $sorted_terms[] =  $t->term_id; 
 
-          return array_filter($term_ids);
-}
+         }
+ 
+          return array_filter($sorted_terms);
+       }
      
 
 
