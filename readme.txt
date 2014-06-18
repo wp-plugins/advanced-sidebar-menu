@@ -5,13 +5,11 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypa
 Tags: menus, sidebar menu, heirchy, category menu, pages menu
 Requires at least: 3.8.0
 Tested up to: 3.9.1
-Stable tag: 4.7.5
+Stable tag: 4.7.6
 
 Creates a widget for both page and categories that will display the current page/category and all child pages or categories.
 
 == Description ==
-
-<h4>Now Supports Internationalization Text Domain 'advanced-sidebar-menu'</h4>
 
 Creates a widget for both page and categories that will display the current page/category and an child pages or categories.
 Keeps the menu clean and usable.

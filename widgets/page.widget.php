@@ -1,11 +1,14 @@
 <?php 
           /**
-           * Creates a Widget of parent Child Pages
+           * Advanced Sidebar Menu Page
+		   * 
+		   * Creates a Widget of parent Child Pages
            * 
            * @author mat lipe <mat@matlipe.com>
-           * @since 12.12.13
+		   * 
            * @package Advanced Sidebar Menu
-           *
+           * @class  advanced_sidebar_menu_page
+		   * 
            */
 class advanced_sidebar_menu_page extends WP_Widget {
     
@@ -30,12 +33,18 @@ class advanced_sidebar_menu_page extends WP_Widget {
      * 
      */
     function __construct() {
-                /* Widget settings. */
-        $widget_ops = array( 'classname' => 'advanced-sidebar-menu', 'description' => __('Creates a menu of all the pages using the child/parent relationship', 'advanced-sidebar-menu') );
-        $control_ops = array( 'width' => 290 );
+        /* Widget settings. */
+        $widget_ops = array( 
+        	'classname' => 'advanced-sidebar-menu', 
+        	'description' => __('Creates a menu of all the pages using the child/parent relationship', 'advanced-sidebar-menu') 
+		);
+        $control_ops = array( 
+        	'width' => 290 
+		);
 
         /* Create the widget. */
         $this->WP_Widget( 'advanced_sidebar_menu', __('Advanced Sidebar Pages Menu','advanced-sidebar-menu'), $widget_ops, $control_ops);
+		
     }
     
     
@@ -187,17 +196,19 @@ class advanced_sidebar_menu_page extends WP_Widget {
         $asm->post_type = $post_type;
         
         //Add a has_children class to appropriate pages
-        add_filter('page_css_class', array( $asm, 'hasChildrenClass'), 2, 2 );
+        add_filter( 'page_css_class', array( $asm, 'hasChildrenClass' ), 2, 2 );
         
         //Add the default classes to pages from a custom post type
         if( $asm->post_type != 'page' ){
-             add_filter('page_css_class', array( $asm, 'custom_post_type_css'), 2, 4 );   
+             add_filter( 'page_css_class', array( $asm, 'custom_post_type_css' ), 2, 4 );   
         }
         
         
-        $proper_single = !(is_single() || is_page() ) || (get_post_type() != $post_type);
+        $proper_single = !( is_page() || ( is_single() && $asm->post_type == get_post_type() ) );
         //Filter the single post check if try to display the menu somewhere else like a category page
-        if( apply_filters('advanced_sidebar_menu_proper_single', $proper_single, $args, $instance, $asm) ) return;
+        if( apply_filters( 'advanced_sidebar_menu_proper_single', $proper_single, $args, $instance, $asm ) ){
+       		return;
+		}
         
 
         //Get the Top Parent Id
@@ -208,7 +219,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
              $top_parent = $post->ID;
         }   
         //Filter for specifying the top parent
-        $top_parent = apply_filters('advanced_sidebar_menu_top_parent', $top_parent, $post, $args, $instance, $asm );
+        $top_parent = apply_filters( 'advanced_sidebar_menu_top_parent', $top_parent, $post, $args, $instance, $asm );
         $asm->top_id = $top_parent;
 
 
@@ -220,12 +231,11 @@ class advanced_sidebar_menu_page extends WP_Widget {
         $order_by = apply_filters('advanced_sidebar_menu_order_by', $instance['order_by'], $post, $args, $instance, $asm );
         $asm->order_by = $order_by; 
             
-
         /**
          * Must be done this way to prevent doubling up of pages
          */
-         $child_pages = $wpdb->get_results( "SELECT ID FROM ". $wpdb->posts ." WHERE post_parent = $top_parent AND post_status='publish' AND post_type='$post_type' Order by $order_by" );
-            
+        $child_pages = $wpdb->get_results( "SELECT ID FROM ". $wpdb->posts ." WHERE post_parent = $top_parent AND post_status='publish' AND post_type='$post_type' Order by $order_by" );
+		 
         //for depreciation
         $p = $top_parent;
         $result = $child_pages = apply_filters( 'advanced_sidebar_menu_child_pages', $child_pages, $post, $args, $instance, $asm );
@@ -251,7 +261,7 @@ class advanced_sidebar_menu_page extends WP_Widget {
                 echo $after_widget;
                 
         }
-
+		
     } #== /widget()
     
 } #== /Clas
