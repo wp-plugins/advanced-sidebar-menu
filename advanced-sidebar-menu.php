@@ -4,11 +4,11 @@ Plugin Name: Advanced Sidebar Menu
 Plugin URI: http://matlipe.com/advanced-sidebar-menu/
 Description: Creates dynamic menu based on child/parent relationship.
 Author: Mat Lipe
-Version: 4.7.6
+Version: 5.0.0
 Author URI: http://matlipe.com
 */
 
-define( 'ADVANCED_SIDEBAR_BASIC_VERSION', '4.7.6' );
+define( 'ADVANCED_SIDEBAR_BASIC_VERSION', '5.0.0' );
 
 
 #-- Define Constants
@@ -21,7 +21,10 @@ define( 'ADVANCED_SIDEBAR_LEGACY_DIR', ADVANCED_SIDEBAR_DIR . 'legacy/' );
 #-- Bring in the Widgets
 require( ADVANCED_SIDEBAR_WIDGETS_DIR.'init.php' );
 #-- Bring in the functions
-require( ADVANCED_SIDEBAR_DIR.'lib/advancedSidebarMenu.php' );
+require( ADVANCED_SIDEBAR_DIR.'classes/Advanced_Sidebar_Menu_Deprecated.php' );
+require( ADVANCED_SIDEBAR_DIR.'classes/advancedSidebarMenu.php' );
+require( ADVANCED_SIDEBAR_DIR.'classes/Advanced_Sidebar_Menu_Page_Walker.php' );
+require( ADVANCED_SIDEBAR_DIR.'classes/Advanced_Sidebar_Menu_List_Pages.php' );
 $asm = new advancedSidebarMenu();
 
 #-- Translate
