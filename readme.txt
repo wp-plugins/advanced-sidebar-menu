@@ -4,8 +4,8 @@ Contributors: Mat Lipe
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal%40lipeimagination%2einfo&lc=US&item_name=Advanced%20Sidebar%20Menu&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest
 Tags: menus, sidebar menu, heirchy, category menu, pages menu
 Requires at least: 3.8.0
-Tested up to: 4.0.0
-Stable tag: 5.0.1
+Tested up to: 4.0.1
+Stable tag: 5.0.2
 
 Creates a widget for both page and categories that will display the current page/category and all child pages or categories.
 
@@ -51,12 +51,15 @@ Many built in filters for altering the way the widgets function.
 Developer Docs may be found here
 <a href="http://matlipe.com/advanced-sidebar-menu/developer-docs/">http://matlipe.com/advanced-sidebar-menu/developer-docs/</a>
 
+To contribute send pull requests:
+<a href="https://github.com/lipemat/advanced-sidebar-menu">GitHub Repo</a>
+
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
+Use the standard WordPress plugins search and install feature.
 
-e.g.
+Manual Installation
 
 1. Upload the `advanced-sidbebar-menu` folder to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
