@@ -18,25 +18,46 @@ class advancedSidebarMenu extends Advanced_Sidebar_Menu_Deprecated {
 	var $order_by;
 	var $taxonomy; //For filters to override the taxonomy
 	var $current_term; //Current category or taxonomy
+
+	/**
+	 * args
+	 *
+	 * Widget Args
+	 *
+	 * @var array
+	 */
+	public $args = array();
+
+	/**
+	 * post_type
+	 *
+	 * @var string
+	 */
+	public $post_type = 'page';
+
+
 	public $levels = 100;
 
 
 	/**
-	 * Check is a page has children by id
+	 * Check is a post has children by id
 	 *
 	 * @since 8.29.13
 	 *
 	 * @param int $postId
+	 *
+	 * @return bool
 	 */
-	function hasChildren( $postId ) {
-		if( $this->post_type == 'page' ){
-			$children = get_pages( "child_of=$postId" );
-		} else {
-			$children = get_posts( array(
-				'post_type'   => $this->post_type,
-				'post_parent' => $postId
-			) );
-		}
+	function hasChildren( $postId ){
+		$args = array(
+			'post_parent' => $postId,
+			'fields' => 'ids',
+			'post_type' => get_post_type( $postId ),
+			'post_status' => 'publish'
+		);
+
+		$children  = get_children( $args );
+
 		if( count( $children ) != 0 ){
 			return true;
 		} else {
